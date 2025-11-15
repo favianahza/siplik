@@ -90,8 +90,8 @@ if(!isset($_SESSION["logged_in"])){
               <li class="nav-item"><a href="#arsip_laporan" class="nav-link text-white my-2" data-load="arsip_laporan"><i class="fa fa-archive nav-icon"></i><p>Arsip Laporan</p></a></li>
 <?php else: ?>
               <li class="nav-item"><a href="#laporan_ditugaskan" class="nav-link text-white my-2" data-load="laporan_ditugaskan"><i class="fa fa-arrow-circle-right nav-icon"></i><p>Laporan Ditugaskan</p></a></li>
-              <li class="nav-item"><a href="#laporan_diproses" class="nav-link text-white my-2" data-load="laporan_diproses"><i class="fa fa-info-circle nav-icon"></i><p>Laporan Diproses</p></a></li>
-              <li class="nav-item"><a href="#arsip_laporan" class="nav-link text-white my-2" data-load="arsip_laporan"><i class="fa fa-archive nav-icon"></i><p>Arsip Laporan</p></a></li>  
+              <li class="nav-item"><a href="#laporan_selesai" class="nav-link text-white my-2" data-load="laporan_selesai"><i class="fa fa-check-circle nav-icon"></i><p>Laporan Selesai</p></a></li>
+              <li class="nav-item"><a href="#laporan_ditolak" class="nav-link text-white my-2" data-load="laporan_ditolak"><i class="fa fa-times-circle nav-icon"></i><p>Laporan Ditolak</p></a></li>  
 <?php endif;?>
             </ul>
           </li>
@@ -141,7 +141,8 @@ if(!isset($_SESSION["logged_in"])){
 <script type="text/javascript" src="scripts/list_petugas.js"></script>
 <?php else: ?>
 <script type="text/javascript" src="scripts/laporan_ditugaskan.js"></script>
-<script type="text/javascript" src="scripts/arsip_laporan.js"></script>
+<script type="text/javascript" src="scripts/laporan_selesai.js"></script>
+<script type="text/javascript" src="scripts/laporan_ditolak.js"></script>
 <?php endif; ?>
 </body>
 </html>

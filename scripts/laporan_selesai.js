@@ -1,0 +1,315 @@
+// Arsip Laporan Table
+function initLaporanSelesai() {
+  const sel = '#tbl-laporan-selesai';
+  const el  = document.querySelector(sel);
+  if (!el) return;
+
+  const token      = 'MY_SUPER_SECRET_TOKEN';
+  const pageLength = Number(el.dataset.limit || 10);     // rows per page (DataTables)
+  const fetchLimit = Number(el.dataset.fetchLimit || 500); // how many rows to fetch once
+  const userID = document.getElementById('sessionUser').value;
+  const apiUrl = `https://app.faps.my.id/api/pengaduan/all?limit=${encodeURIComponent(fetchLimit)}&assigned_to=${userID}`;
+
+  // Destroy previous instance if any
+  if ($.fn.DataTable.isDataTable(sel)) $(sel).DataTable().destroy();
+
+  // Show a lightweight loading row
+  const tbody = el.querySelector('tbody');
+  if (tbody) {
+    tbody.innerHTML = `
+      <tr><td colspan="6" class="text-center py-4">
+        <div class="spinner-border text-success me-2" role="status" style="width:1.25rem;height:1.25rem;"></div>
+        Memuat data…
+      </td></tr>`;
+  }
+
+  // Fetch once
+  fetch(apiUrl, {
+    headers: { Accept: 'application/json', Authorization: `Bearer ${token}` }
+  })
+    .then(r => {
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      return r.json();
+    })
+    .then(rows => {
+      let arr = Array.isArray(rows) ? rows : [];
+      
+      // Initialize DataTable with client-side pagination/search/sort
+      const data = arr.filter(item => 
+        item.status === "selesai"
+      );
+
+      new DataTable(sel, {
+        data,
+        deferRender: true,
+        paging: true,
+        pageLength,
+        lengthChange: true,   // user can choose 10/25/50/…
+        searching: true,
+        ordering: true,
+        columns: [
+          {
+            data: "id",
+            render: function (data, type, row, meta) {
+            return meta.row + meta.settings._iDisplayStart + 1;
+            },
+            className: "text-center",
+          },
+          { data: "ticket_code" },
+          {
+            data: "created_at",
+            render: (value, type) => {
+                if (type === "display") return formatDMY(value);
+                return value || "";
+            },
+            className: "text-center"
+          },      
+          { data: "nama_kategori" },
+          { data: "nama_kecamatan" },
+          { data: "alamat_lengkap" },
+          {
+            data: 'status',
+            render: function (data, type, row) {
+              if (data === 'ditolak') {
+                return '<p class="btn btn-sm btn-danger text-white mb-0">DITOLAK</p>';
+              } else {
+                return '<p class="btn btn-sm btn-success text-white mb-0">SELESAI</p>';
+              }
+            }
+          },
+          {
+            data: "ticket_code",
+            orderable: false,
+            searchable: false,
+            render: (ticket, type, row) => `
+            <div class="d-flex flex-wrap justify-content-center">
+                <a href="#detail_selesai" data-ticket="${encodeURIComponent(ticket)}"class="btn btn-sm w-100 w-lg-0 mb-2 bg-primary text-white detail_selesai">DETAIL</a>
+            </div>`
+          },
+        ],
+        language: {
+          emptyTable: 'Belum ada data pengaduan.',
+          processing: 'Memuat data…',
+          paginate: { previous: '«', next: '»' }
+        }
+      });
+    })
+    .catch(err => {
+      console.error('Gagal memuat data:', err);
+      if (tbody) {
+        tbody.innerHTML = `
+          <tr><td colspan="8" class="text-center text-danger py-4">
+            Tidak ada laporan.
+          </td></tr>`;
+      }
+    });
+}
+
+
+
+// Get laporan selesai in detail
+$(document).on('click', 'a.detail_selesai[data-ticket]', function (e) {
+  e.preventDefault();
+
+  const ticketCode = $(this).data('ticket');
+  const $main = $('main#content-wrapper');
+  const token = 'MY_SUPER_SECRET_TOKEN';
+  let apiUrl = `https://app.faps.my.id/api/pengaduan/${ticketCode}/?detailed=true`;
+
+  $main.html(`
+    <div class="d-flex flex-column align-items-center justify-content-center py-5 text-muted">
+      <div class="spinner-border text-success mb-3" role="status"></div>
+      <p>Sedang memuat detail laporan...</p>
+    </div>
+  `);
+
+  $.ajax({
+    url: apiUrl,
+    method: 'GET',
+    dataType: 'json',
+    headers: {
+      Accept: 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    data: { ticket_code: ticketCode },
+    timeout: 30000
+  })
+  .done(function (data) {
+    // Pengaduan
+    const laporan = Array.isArray(data) ? data[0] : data;
+    if (!laporan) throw new Error('Data laporan tidak ditemukan');
+    const pengaduanID = laporan.id;
+    const images = Array.isArray(laporan.images) ? laporan.images : [];
+    const imgPengaduanList = images.map(function (img) {
+      return `
+        <a data-fslightbox="lampiran" href="https://app.faps.my.id/assets/uploads/bukti/${img}">
+          <img src="https://app.faps.my.id/assets/uploads/bukti/${img}" alt="Bukti Laporan ${laporan.ticket_code}"
+               class="img-fluid rounded shadow-sm mb-2"
+               style="max-width: 500px; display: inline; margin: 0 auto;">
+        </a>
+      `;
+    }).join('');
+
+    const formatDate = function (str) {
+      if (!str) return '-';
+      const d = new Date(String(str).replace(' ', 'T'));
+      return d.toLocaleDateString('id-ID', {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+    };
+
+    const pengaduanHTML = `
+      <section class="content-header py-3 border-bottom">
+        <div class="container-fluid d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-2">
+          <h1 class="m-0 fw-bold">Detail Laporan: ${laporan.ticket_code}</h1>
+          <div class="text-muted small text-md-end">
+            Diperbarui pada: <strong>${formatDate(laporan.updated_at)}</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="content py-3">
+        <div class="container-fluid">
+          <div class="card border-0 shadow-sm mb-3">
+            <div class="card-body">
+              <h5 class="fw-semibold mb-3">Informasi Umum</h5>
+              <table class="table table-sm table-borderless mb-0">
+                <tbody>
+                  <tr><th width="180">Kode Tiket</th><td>${laporan.ticket_code}</td></tr>
+                  <tr><th>Kategori</th><td>${laporan.nama_kategori}</td></tr>
+                  <tr><th>Kecamatan</th><td>${laporan.nama_kecamatan}</td></tr>
+                  <tr><th>Kelurahan</th><td>${laporan.nama_kelurahan}</td></tr>
+                  <tr><th>Alamat Lengkap</th><td>${laporan.alamat_lengkap}</td></tr>
+                  <tr><th>Tanggal Masuk</th><td>${formatDate(laporan.created_at)}</td></tr>
+                  <tr><th>Status</th><td><span class="badge bg-success">SELESAI</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body text-center">
+              <h5 class="fw-semibold mb-3">Lampiran Pengaduan</h5>
+              ${imgPengaduanList || '<em class="text-muted">Tidak ada lampiran.</em>'}
+            </div>
+          </div>
+
+          <div class="card border-0 shadow-sm mb-3">
+            <div class="card-body">
+              <h5 class="fw-semibold mb-3">Kronologi / Deskripsi</h5>
+              <p class="mb-0">${laporan.kronologi || '<em>Tidak ada keterangan.</em>'}</p>
+            </div>
+          </div>
+
+          <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body">
+              <h5 class="fw-semibold mb-3">Pelapor</h5>
+              <table class="table table-sm table-borderless mb-0">
+                <tbody>
+                  <tr><th width="180">Nama</th><td>${laporan.is_anonim ? '<em>Anonim</em>' : laporan.nama_pelapor}</td></tr>
+                  <tr><th>Email</th><td>${laporan.is_anonim ? '-' : laporan.email_pelapor}</td></tr>
+                  <tr><th>No. Telp</th><td>${laporan.is_anonim ? '-' : laporan.telp_pelapor}</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>    
+    `;
+
+
+    // Fetch API to get information of tindak_lanjut
+    let apiUrl = `https://app.faps.my.id/api/tindak_lanjut/ticket/${ticketCode}`;
+    $.ajax({
+      url: apiUrl,
+      method: 'GET',
+      dataType: 'json',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      data: { ticket_code: ticketCode },
+      timeout: 30000
+    }).done(function(data){
+
+        // Tindak Lanjut
+        const tindak_lanjut = Array.isArray(data) ? data[0] : data;
+        if (!tindak_lanjut) throw new Error('Data tindak lanjut tidak ditemukan');
+        console.log(tindak_lanjut)
+
+        const images = Array.isArray(tindak_lanjut.fotos) ? tindak_lanjut.fotos : [];
+        const imgTindakLanjutList = images.map(function (img) {
+          return `
+            <a data-fslightbox="lampiran" href="https://app.faps.my.id/assets/uploads/tindak_lanjut/${img}">
+              <img src="https://app.faps.my.id/assets/uploads/tindak_lanjut/${img}" alt="Bukti Tindak Lanjut ${laporan.ticket_code}"
+                  class="img-fluid rounded shadow-sm mb-2"
+                  style="max-width: 500px; display: inline; margin: 0 auto;">
+            </a>
+          `;
+        }).join('');        
+
+        const tindakLanjutHTML = `
+          <section class="content-header py-3 border-bottom">
+            <div class="container-fluid d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-2">
+              <h1 class="m-0 fw-bold">Detail Tindak Lanjut: ${laporan.ticket_code}</h1>
+              <div class="text-muted small text-md-end">
+                Selesai pada: <strong>${formatDate(laporan.updated_at)}</strong>
+              </div>
+            </div>
+          </section>
+
+          <section class="content py-3">
+            <div class="container-fluid">
+
+              <div class="card border-0 shadow-sm mb-3">
+                <div class="card-body">
+                  <h5 class="fw-semibold mb-3">Catatan Tindak Lanjut</h5>
+                  <p class="mb-0">${tindak_lanjut.catatan || '<em>Tidak ada catatan terkait tindak lanjut.</em>'}</p>
+                </div>
+              </div>
+
+              <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body text-center">
+                  <h5 class="fw-semibold mb-3">Lampiran Pengaduan</h5>
+                  ${imgTindakLanjutList || '<em class="text-muted">Tidak ada lampiran.</em>'}
+                </div>
+              </div>
+
+              <div class="text-end">
+                <button class="btn btn-secondary" id="btn-back" onclick="loadComponent('laporan_selesai')">← Kembali</button>
+              </div>
+            </div>
+          </section>    
+        `;
+
+        $main.html(`
+          ${pengaduanHTML}
+          ${tindakLanjutHTML}
+          <script src="https://cdn.jsdelivr.net/npm/fslightbox@3.7.4/index.min.js"></script>
+        `);
+
+    }).fail(function(){
+          console.error('❌ Gagal mengambil detail laporan:', textStatus, jqXHR.status);
+          $main.html(`
+            <div class="text-center text-danger py-5">
+              <p>Gagal memuat detail laporan. Silakan coba lagi.</p>
+              <button class="btn btn-outline-secondary" id="btn-back">Kembali</button>
+            </div>
+          `);
+    })
+
+  })
+  .fail(function (jqXHR, textStatus) {
+    console.error('❌ Gagal mengambil detail laporan:', textStatus, jqXHR.status);
+    $main.html(`
+      <div class="text-center text-danger py-5">
+        <p>Gagal memuat detail laporan. Silakan coba lagi.</p>
+        <button class="btn btn-outline-secondary" id="btn-back">Kembali</button>
+      </div>
+    `);
+  });
+});

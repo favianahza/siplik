@@ -9,7 +9,7 @@ final class Database
     private static ?PDO $pdo = null;
 
     // Adjust DB name as needed
-    private const DB_HOST = '172.19.0.3';
+    private const DB_HOST = '172.19.0.2';
     private const DB_NAME = 'sipilik';
     private const DB_USER = 'admin';
     private const DB_PASS = 'P@ssw0rdP@ssw0rd!';

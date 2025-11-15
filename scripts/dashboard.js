@@ -66,6 +66,10 @@ function loadComponent(componentName) {
         initPetugasTable();
       } else if (componentName === "laporan_ditugaskan") {
         initLaporanDitugaskan();
+      } else if (componentName === "laporan_selesai") {
+        initLaporanSelesai();
+      } else if (componentName === "laporan_ditolak") {
+        initLaporanDitolak();
       }
       
     },
