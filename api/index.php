@@ -64,6 +64,10 @@ if ($segments[0] === 'api' && isset($segments[1])) {
             require __DIR__ . '/auth.php';
             break;
 
+        case 'tindak_lanjut':
+        require __DIR__ . '/tindak_lanjut.php';
+        break;            
+
         default:
             http_response_code(404);
             echo json_encode(['error' => 'Resource not found']);

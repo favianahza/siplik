@@ -64,6 +64,8 @@ function loadComponent(componentName) {
         initArsipLaporanProses(); // call the specific function
       } else if (componentName === "list_petugas"){
         initPetugasTable();
+      } else if (componentName === "laporan_ditugaskan") {
+        initLaporanDitugaskan();
       }
       
     },

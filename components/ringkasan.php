@@ -2,8 +2,8 @@
 require_once __DIR__ . "/../config/init.php";
 require_once __DIR__ . "/../config/database.php";
 secureSessionStart();
-$sqlMasuk = "SELECT COUNT(ticket_code) AS num FROM pengaduan WHERE DATE(created_at) = CURDATE() AND status = 'masuk'";
-$sqlSelesai = "SELECT COUNT(ticket_code) AS num FROM pengaduan WHERE DATE(created_at) = CURDATE() AND status = 'selesai'";
+$sqlMasuk = "SELECT COUNT(ticket_code) AS num FROM pengaduan WHERE DATE(created_at) = CURDATE() AND (status = 'masuk' OR status = 'diproses')";
+$sqlSelesai = "SELECT COUNT(ticket_code) AS num FROM pengaduan WHERE (DATE(created_at) = CURDATE() OR DATE(updated_at) = CURDATE()) AND status = 'selesai'";
 $sqlUniqueEmail = "SELECT COUNT(DISTINCT email_pelapor) AS unique_emails FROM pengaduan WHERE DATE(created_at) = CURDATE() AND (is_anonim = 0 OR is_anonim IS NULL) AND email_pelapor IS NOT NULL AND email_pelapor != ''";
 $sqlLatest = "  SELECT * FROM pengaduan ORDER BY id DESC LIMIT 1";
 $stats["today_incoming"] = Database::fetch($sqlMasuk)["num"] ?? 0;

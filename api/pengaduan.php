@@ -110,14 +110,34 @@ function getPengaduanByTicketCode($ticket_code)
     return checkResource($result);
 }
 
-function getDetailedPengaduanAll($page = 1, $limit = 10)
+function getDetailedPengaduanAll($page = 1, $limit = 10, $assigned_to = null)
 {
     $page  = max(1, (int)$page);
     $limit = max(1, (int)$limit);
     $offset = ($page - 1) * $limit;
-    $query = "SELECT * FROM view_pengaduan_detailed ORDER BY id ASC LIMIT :limit OFFSET :offset";
-    $param = [ "limit"  => $limit, "offset" => $offset ];
+
+    // Base query
+    $query = "
+        SELECT *
+        FROM view_pengaduan_detailed
+    ";
+
+    $param = [];
+
+    // If assigned_to filter is provided
+    if (!empty($assigned_to)) {
+        $query .= " WHERE assigned_to = :assigned_to ";
+        $param['assigned_to'] = (int)$assigned_to;
+    }
+
+    // Order + pagination
+    $query .= " ORDER BY id ASC LIMIT :limit OFFSET :offset";
+
+    $param['limit']  = $limit;
+    $param['offset'] = $offset;
+
     $result = Database::fetchAll($query, $param);
+
     return checkResource($result);
 }
 
@@ -349,9 +369,11 @@ if ($method === 'GET' && ctype_digit($resource) && (strlen($resource) < 10) ) {
 
 } else if ($method === 'GET' && $resource == "all") {
     // api/pengaduan/all
-    $limit = $_GET["limit"] ?? 10;
-    $page = $_GET["page"] ?? 1;
-    $data = getDetailedPengaduanAll($page, $limit);
+    $limit        = $_GET["limit"] ?? 10;
+    $page         = $_GET["page"] ?? 1;
+    $assigned_to  = $_GET["assigned_to"] ?? null;
+    $data = getDetailedPengaduanAll($page, $limit, $assigned_to);
+
     echo $data ? json_encode($data) : (http_response_code(404) && json_encode(['error' => 'Pengaduan not found']));
 
 }  else if($method === 'PATCH' && (strlen($resource) == 10) && isset($_GET["verify"])){
@@ -361,6 +383,7 @@ if ($method === 'GET' && ctype_digit($resource) && (strlen($resource) < 10) ) {
 }  else if($method === 'PATCH' && (strlen($resource) == 10) && isset($_GET["reject"])){
     // api/pengaduan/<TICKET_CODE>?reject=true
     rejectPengaduanByTicketCode($resource);
+
 } else if($method === 'PATCH' && (strlen($resource) == 10) && isset($_GET["petugas"])){
     // api/pengaduan/<TICKET_CODE>?petugas=<NUM>
     assignPetugasToPengaduan($resource);
@@ -371,7 +394,6 @@ if ($method === 'GET' && ctype_digit($resource) && (strlen($resource) < 10) ) {
 } else {
     http_response_code(400);
     echo json_encode(['error' => 'Bad request']);
-
 }
 
 

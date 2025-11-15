@@ -31,6 +31,8 @@ if(!isset($_SESSION["logged_in"])){
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
+<input type="hidden" id="sessionUser" value="<?php echo $_SESSION['user_id']; ?>">
+
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
@@ -82,9 +84,15 @@ if(!isset($_SESSION["logged_in"])){
               <p>Laporan<i class="right fas fa-angle-left"></i></p>
             </a>
             <ul class="nav nav-treeview my-1" data-widge="treeview">
+<?php if($_SESSION["user_role"] == "Petugas DLHK") : ?>
               <li class="nav-item"><a href="#laporan_masuk" class="nav-link text-white my-2" data-load="laporan_masuk"><i class="fa fa-arrow-circle-right nav-icon"></i><p>Laporan Masuk</p></a></li>
               <li class="nav-item"><a href="#laporan_diproses" class="nav-link text-white my-2" data-load="laporan_diproses"><i class="fa fa-info-circle nav-icon"></i><p>Laporan Diproses</p></a></li>
               <li class="nav-item"><a href="#arsip_laporan" class="nav-link text-white my-2" data-load="arsip_laporan"><i class="fa fa-archive nav-icon"></i><p>Arsip Laporan</p></a></li>
+<?php else: ?>
+              <li class="nav-item"><a href="#laporan_ditugaskan" class="nav-link text-white my-2" data-load="laporan_ditugaskan"><i class="fa fa-arrow-circle-right nav-icon"></i><p>Laporan Ditugaskan</p></a></li>
+              <li class="nav-item"><a href="#laporan_diproses" class="nav-link text-white my-2" data-load="laporan_diproses"><i class="fa fa-info-circle nav-icon"></i><p>Laporan Diproses</p></a></li>
+              <li class="nav-item"><a href="#arsip_laporan" class="nav-link text-white my-2" data-load="arsip_laporan"><i class="fa fa-archive nav-icon"></i><p>Arsip Laporan</p></a></li>  
+<?php endif;?>
             </ul>
           </li>
           <!-- <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon fas fa-map-marker-alt"></i><p>Peta Lokasi</p></a></li> -->
@@ -126,9 +134,14 @@ if(!isset($_SESSION["logged_in"])){
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script type="text/javascript" src="scripts/utils.js"></script>
 <script type="text/javascript" src="scripts/dashboard.js"></script>
+<?php if($_SESSION["user_role"] == "Petugas DLHK") : ?>
 <script type="text/javascript" src="scripts/laporan_masuk.js"></script>
 <script type="text/javascript" src="scripts/laporan_diproses.js"></script>
 <script type="text/javascript" src="scripts/arsip_laporan.js"></script>
 <script type="text/javascript" src="scripts/list_petugas.js"></script>
+<?php else: ?>
+<script type="text/javascript" src="scripts/laporan_ditugaskan.js"></script>
+<script type="text/javascript" src="scripts/arsip_laporan.js"></script>
+<?php endif; ?>
 </body>
 </html>

@@ -468,7 +468,7 @@ $(document).on("click", 'a.alokasi[data-ticket]', function (e) {
         showCancelButton: true,
         cancelButtonText: "OK"
       }).then((result) => {
-         closeModal('#assign-petugas-modal');
+         closeModal($('#assign-petugas-modal'));
          setTimeout(() => {
            loadComponent("laporan_masuk");
          }, 1000);
