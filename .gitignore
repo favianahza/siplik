@@ -1,0 +1,77 @@
+assets/uploads/*
+assets/uploads/**/*
+# Except keep placeholder file(s)
+!assets/uploads/.gitkeep
+!assets/uploads/**/.gitkeep
+
+# logs folder included, but ignore all log files inside it
+logs/*
+logs/**/*
+# Allow empty dir placeholder
+!logs/.gitkeep
+!logs/**/.gitkeep
+
+
+########################################
+# Ignore files containing certain text
+########################################
+
+*_*backup*
+* backup*
+* copy*
+*_*old*
+*_*native*
+
+
+########################################
+# PHP Application Defaults
+########################################
+
+# Composer
+/vendor/
+composer.phar
+
+# Environment files
+.env
+.env.*
+*.env.php
+
+# Cache / temporary
+cache/
+tmp/
+temp/
+*.tmp
+
+# Logs (except directory root handled above)
+*.log
+
+# Sessions / runtime
+sessions/
+storage/framework/sessions/
+storage/framework/cache/
+storage/framework/views/
+
+# IDE / Editor
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# System
+.DS_Store
+Thumbs.db
+
+# Node (if using frontend tools)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Backup / swap / misc
+*.bak
+*.swp
+*.orig
+
+# Archives
+*.zip
+*.tar.gz
+*.rar

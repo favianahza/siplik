@@ -1,0 +1,1178 @@
+/* styles.css — SIPLIK landing page
+   Nature palette, dark-green navbar, black/white footer
+   Now with centered Features, emoji icons, and added shadows
+*/
+
+/* ====== Variables ====== */
+:root {
+	--color-primary: #0ec04f;
+	--color-primary-dark: #2e7d32;
+	--color-primary-darker: #1b5e20;
+	--color-primary-light: #e8f5e9;
+	--color-accent: #66bb6a;
+	--color-text: #1f2937;
+	--color-muted: #6b7280;
+	--color-bg: #ffffff;
+	--color-footer-bg: #000000;
+	--color-footer-text: #ffffff;
+	--radius: 14px;
+	--shadow-xs: 0 1px 2px rgba(0, 0, 0, .06);
+	--shadow-sm: 0 2px 6px rgba(0, 0, 0, .10);
+	--shadow-md: 0 8px 20px rgba(0, 0, 0, .14);
+	--shadow-lg: 0 14px 34px rgba(0, 0, 0, .18);
+	--space-1: .25rem;
+	--space-2: .5rem;
+	--space-3: .75rem;
+	--space-4: 1rem;
+	--space-6: 1.5rem;
+	--space-8: 2rem;
+	--space-12: 3rem;
+	--space-16: 4rem;
+	--max-w: 1500px;
+	--lh: 1.5rem;
+}
+
+/* Uniform style for all form inputs */
+input[type="text"],
+input[type="password"],
+input[type="tel"],
+input[type="email"],
+input[type="number"] {
+	width: 100%;
+	padding: .72rem .9rem;
+	border-radius: 10px;
+	border: 1px solid #e5e7eb;
+	background: #fff;
+	color: var(--color-text);
+	box-shadow: var(--shadow-xs) inset;
+	transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+/* Focus state (green outline like Nama Lengkap) */
+input[type="text"]:focus-visible,
+input[type="password"]:focus-visible,
+input[type="tel"]:focus-visible,
+input[type="email"]:focus-visible,
+input[type="number"]:focus-visible {
+	outline: 3px solid var(--color-accent);
+	outline-offset: 2px;
+	border-color: var(--color-primary);
+}
+
+
+/* ====== Base ====== */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	height: 100%;
+	font-size: 110%;
+}
+
+body {
+	margin: 0;
+	font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans", "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+	line-height: var(--lh);
+	color: var(--color-text);
+	background: var(--color-bg);
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	display: flex;
+	flex-direction: column;
+}
+
+main {
+	flex: 1 1 auto;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+	display: block;
+	border-radius: calc(var(--radius) - 6px);
+}
+
+/* ====== Layout utils ====== */
+.container {
+	max-width: var(--max-w);
+	margin-inline: auto;
+	padding-inline: var(--space-4);
+}
+
+.section {
+	padding-block: var(--space-16);
+}
+
+/* --- Kontainer Halaman --- */
+.container {
+	width: 100%;
+	max-width: 1100px;
+	/* Lebar maksimum konten */
+	margin: 0 auto;
+	padding: 0 20px;
+}
+
+.section {
+	padding: 12px 0;
+	/* Padding vertikal untuk header */
+	background-color: #ffffff;
+	border-bottom: 1px solid #E2E8F0;
+	/* Garis batas bawah opsional */
+}
+
+/* --- 1. Tata Letak Navbar Utama --- */
+.navbar {
+	display: flex;
+	justify-content: space-between;
+	/* Kunci: Kiri di kiri, Kanan di kanan */
+	align-items: center;
+	/* Kunci: Sejajarkan semua secara vertikal */
+	width: 100%;
+	min-height: 60px;
+	/* Tinggi minimum navbar */
+}
+
+/* --- 2. Sisi Kiri (Logo & Brand) --- */
+.navbar-brand {
+	display: flex;
+	align-items: center;
+	/* Sejajarkan ikon & teks */
+	gap: 10px;
+	/* Jarak antara ikon & teks */
+	text-decoration: none;
+	color: #2D3748;
+	font-size: 20px;
+	font-weight: 600;
+	/* Teks "SIPLIK" tebal */
+}
+
+.navbar-brand svg {
+	width: 28px;
+	height: 28px;
+}
+
+/* --- 3. Sisi Kanan (Link Navigasi) --- */
+.navbar-right ul {
+	display: flex;
+	align-items: center;
+	gap: 24px;
+	/* Jarak antar item link */
+	list-style: none;
+	/* Hapus bullet points */
+}
+
+.navbar-right li {
+	margin: 0;
+	padding: 0;
+}
+
+.navbar-right a {
+	text-decoration: none;
+	color: #4A5568;
+	/* Teks abu-abu tua */
+	font-size: 16px;
+	font-weight: 500;
+	transition: color 0.3s ease;
+}
+
+.navbar-right a:hover {
+	color: #1cb957;
+	/* Ubah warna saat hover */
+}
+
+/* --- 4. Tombol "Daftar" (Paling Penting) --- */
+.btn-primary {
+	background-color: #1cb957;
+	/* Warna hijau dari gambar */
+	color: #ffffff !important;
+	/* Paksa teks jadi putih */
+	padding: 10px 24px;
+	border-radius: 9999px;
+	/* Membuat bentuk pil (pill shape) */
+	font-weight: 600;
+	transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+	background-color: #189a49;
+	/* Hijau lebih gelap saat hover */
+	color: #ffffff !important;
+}
+
+/* --- Kontainer Hero --- */
+.hero-section {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 48px;
+	/* Jarak antara teks dan gambar */
+	width: 100%;
+	max-width: 1100px;
+	margin: 40px auto;
+	padding: 40px 20px;
+	background-color: #ffffff;
+	/* Latar belakang putih untuk bagian ini */
+}
+
+/* --- 1. Konten Teks (Kiri) --- */
+.hero-content {
+	flex: 1;
+	/* Biarkan konten teks mengambil sisa ruang */
+	max-width: 480px;
+	/* Batasi lebar agar tidak terlalu panjang */
+}
+
+.hero-content h2 {
+	font-size: 28px;
+	font-weight: 600;
+	color: #2D3748;
+	/* Judul lebih gelap */
+	margin-bottom: 12px;
+	line-height: 1.3;
+	text-align: center;
+}
+
+.hero-content p {
+	font-size: 16px;
+	line-height: 1.6;
+	color: #6B7280;
+	/* Teks paragraf sedikit lebih terang */
+	margin-bottom: 32px;
+}
+
+/* --- Tombol --- */
+.hero-buttons {
+	display: flex;
+	flex-direction: column;
+	/* Tombol ditumpuk vertikal */
+	gap: 12px;
+}
+
+.btn {
+	display: block;
+	/* Buat tombol memenuhi lebar kontainer (dalam flex column) */
+	padding: 12px 24px;
+	text-align: center;
+	font-size: 16px;
+	font-weight: 600;
+	border-radius: 8px;
+	/* Sedikit membulat */
+	text-decoration: none;
+	transition: all 0.3s ease;
+}
+
+/* Tombol Hijau Solid */
+.btn-primary {
+	background-color: #1cb957;
+	/* Hijau dari gambar */
+	color: #ffffff;
+	border: 1px solid #1cb957;
+}
+
+.btn-primary:hover {
+	background-color: #189a49;
+	/* Hijau lebih gelap */
+	border-color: #189a49;
+}
+
+/* Tombol Outline */
+.btn-secondary {
+	background-color: #ffffff;
+	color: #1cb957;
+	/* Teks hijau */
+	border: 1px solid #1cb957;
+	/* Border hijau */
+}
+
+.btn-secondary:hover {
+	background-color: #f0fdf4;
+	/* Latar hijau sangat muda */
+	color: #189a49;
+}
+
+/* --- 2. Gambar (Kanan) --- */
+.hero-image {
+	flex: 1;
+	/* Biarkan gambar mengambil ruang */
+	min-width: 0;
+	/* Mencegah gambar overflow di flex container */
+}
+
+.hero-image img {
+	width: 100%;
+	height: auto;
+	border-radius: 12px;
+	/* Sesuai gambar, sudut membulat */
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.07);
+	display: block;
+}
+
+/* ====== Buttons ====== */
+.btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: .72rem 1rem;
+	border-radius: 999px;
+	font-weight: 700;
+	text-decoration: none;
+	border: 1px solid currentColor;
+	transition: transform .08s ease, box-shadow .18s ease, background-color .18s ease, color .18s ease, border-color .18s ease;
+	box-shadow: var(--shadow-xs);
+}
+
+.btn:hover {
+	transform: translateY(-1px);
+	box-shadow: var(--shadow-sm);
+}
+
+.btn:active {
+	transform: translateY(0);
+}
+
+.btn-primary {
+	background: var(--color-primary);
+	color: #fff;
+	border-color: var(--color-primary);
+	box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover,
+.btn-primary:focus-visible {
+	background: var(--color-primary-dark);
+	border-color: var(--color-primary-dark);
+	box-shadow: var(--shadow-md);
+}
+
+.btn:not(.btn-primary) {
+	color: var(--color-primary);
+	background: transparent;
+	border-color: var(--color-primary);
+}
+
+.btn:not(.btn-primary):hover,
+.btn:not(.btn-primary):focus-visible {
+	background: var(--color-primary-light);
+}
+
+
+/* ====== Features (centered title, centered cards, emoji icons, shadows) ====== */
+#features .container {
+	display: grid;
+	gap: var(--space-8);
+}
+
+#features h2 {
+	margin: 0 0 var(--space-4);
+	font-weight: 800;
+	color: var(--color-text);
+	text-align: center;
+}
+
+#features .container>.card {
+	background: #fff;
+	border: 1px solid #e8efe9;
+	border-radius: var(--radius);
+	padding: var(--space-6);
+	box-shadow: var(--shadow-sm);
+	display: grid;
+	gap: var(--space-4);
+	justify-items: center;
+	text-align: center;
+	transition: transform .12s ease, box-shadow .18s ease;
+}
+
+#features .container>.card:hover {
+	transform: translateY(-2px);
+	box-shadow: var(--shadow-md);
+}
+
+.icon-emoji {
+	font-size: 2rem;
+	line-height: 1;
+	border-radius: 12px;
+	background: var(--color-primary-light);
+	padding: .6rem .8rem;
+	box-shadow: var(--shadow-xs);
+}
+
+.card h3 {
+	margin: 0;
+	font-size: 1.1rem;
+	font-weight: 800;
+	color: var(--color-text);
+}
+
+.card p {
+	margin: 0;
+	color: var(--color-muted);
+}
+
+/* ====== CTA (add soft ambient) ====== */
+#cta {
+	background: radial-gradient(8000px 400px at 20% -10%, rgba(102, 187, 106, 0.12), transparent 60%),
+		radial-gradient(8000px 400px at 120% 110%, rgba(46, 125, 50, 0.10), transparent 60%);
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, .6);
+}
+
+#cta h2 {
+	margin: 0 0 var(--space-3);
+	color: var(--color-text);
+	text-align: center;
+}
+
+#cta p {
+	margin: 0 0 var(--space-4);
+	color: var(--color-muted);
+	text-align: center;
+}
+
+/* ====== Footer (black/white, slight inner shadow illusion) ====== */
+footer.section {
+	padding-block: var(--space-8);
+	background: var(--color-footer-bg);
+	color: var(--color-footer-text);
+	text-align: center;
+	box-shadow: 0 -8px 20px rgba(0, 0, 0, .25);
+}
+
+#footer h2 {
+	margin: 0 0 var(--space-3);
+	font-size: 1rem;
+	color: var(--color-footer-text);
+	font-weight: 700;
+	letter-spacing: .2px;
+	text-transform: uppercase;
+}
+
+#footer p {
+	margin: 0;
+	color: var(--color-footer-text);
+}
+
+#footer a {
+	color: var(--color-accent);
+	text-decoration: none;
+	font-weight: 700;
+}
+
+#footer a:hover {
+	text-decoration: underline;
+}
+
+/* ====== Responsive ====== */
+@media (min-width: 768px) {
+	#hero .container {
+		grid-template-columns: 1.1fr .9fr;
+	}
+
+	#features .container {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+@media (max-width: 767.98px) {
+	.navbar {
+		flex-wrap: wrap;
+		row-gap: var(--space-3);
+	}
+
+	.navbar-right ul {
+		gap: var(--space-4);
+		flex-wrap: wrap;
+	}
+}
+
+/* ====== Accessibility ====== */
+:focus-visible {
+	outline: 3px solid var(--color-accent);
+	outline-offset: 2px;
+}
+
+
+/* ====== Modal (floating) ====== */
+.modal {
+	position: fixed;
+	inset: 0;
+	display: none;
+	/* display: flex; */
+	align-items: center;
+	justify-content: center;
+	z-index: 50;
+}
+
+.modal.is-open {
+	display: flex;
+}
+
+.modal-overlay {
+	position: absolute;
+	inset: 0;
+	background: rgba(0, 0, 0, .45);
+	backdrop-filter: blur(2px);
+}
+
+.modal-card {
+	position: relative;
+	width: min(560px, calc(100% - 2rem));
+	background: #fff;
+	border-radius: var(--radius);
+	box-shadow: var(--shadow-lg);
+	padding: var(--space-4) var(--space-8);
+	z-index: 1;
+}
+
+.modal-close {
+	position: absolute;
+	top: .75rem;
+	right: .75rem;
+	width: 36px;
+	height: 36px;
+	border: 0;
+	border-radius: 999px;
+	background: var(--color-primary-light);
+	color: var(--color-primary-dark);
+	font-size: 1.25rem;
+	line-height: 1;
+	cursor: pointer;
+	box-shadow: var(--shadow-xs);
+}
+
+.modal-close:hover {
+	filter: brightness(0.96);
+}
+
+.modal-header h2 {
+	margin: 0 0 .25rem;
+	color: var(--color-text);
+	font-weight: 800;
+	text-align: center;
+	line-height: 3ch;
+}
+
+.modal-header p {
+	margin: 0 0 var(--space-6);
+	color: var(--color-muted);
+	text-align: center;
+}
+
+/* Form controls */
+.modal-form {
+	display: grid;
+	gap: var(--space-4);
+}
+
+.form-row {
+	display: grid;
+	gap: .375rem;
+}
+
+.form-row-inline {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+label {
+	font-weight: 700;
+	color: var(--color-text);
+}
+
+input[type="text"],
+input[type="password"] {
+	width: 100%;
+	padding: .72rem .9rem;
+	border-radius: 10px;
+	border: 1px solid #e5e7eb;
+	background: #fff;
+	color: var(--color-text);
+	box-shadow: var(--shadow-xs) inset;
+}
+
+input:focus-visible {
+	outline: 3px solid var(--color-accent);
+	outline-offset: 2px;
+	border-color: var(--color-primary);
+}
+
+.checkbox {
+	display: inline-flex;
+	align-items: center;
+	gap: .5rem;
+	font-weight: 600;
+	color: var(--color-text);
+}
+
+.checkbox input {
+	width: 1rem;
+	height: 1rem;
+}
+
+.form-actions {
+	margin-top: var(--space-2);
+}
+
+.form-actions .btn {
+	width: 100%;
+	font-size: 1rem;
+}
+
+.form-footnote {
+	text-align: center;
+	color: var(--color-text);
+}
+
+.form-footnote a.modal-link {
+	color: var(--color-primary);
+	text-decoration: none;
+}
+
+.form-footnote a.modal-link:hover {
+	text-decoration: underline;
+}
+
+/* Prevent background scroll when modal open */
+body.modal-open {
+	overflow: hidden;
+}
+
+/* === Inline Radio Button Group === */
+.radio-inline-group {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 1.5rem;
+	margin-top: 0.5rem;
+	flex-wrap: wrap;
+	/* ensures good behavior on mobile */
+}
+
+.radio-inline-group label {
+	display: flex;
+	align-items: center;
+	gap: 0.4rem;
+	font-weight: 500;
+	color: #1f2937;
+	cursor: pointer;
+}
+
+/* Style radio buttons to match form theme */
+.radio-inline-group input[type="radio"] {
+	accent-color: #1b5e20;
+	/* SIPLIK green */
+	width: 18px;
+	height: 18px;
+	cursor: pointer;
+}
+
+
+/* Small screens: slightly tighter padding */
+@media (max-width: 480px) {
+	.modal-card {
+		padding: var(--space-6);
+	}
+}
+
+/* Optional: tiny helper style for inline validation */
+.field-error {
+	display: block;
+	margin-top: .25rem;
+	color: #b91c1c;
+	/* red-700 */
+	font-weight: 600;
+	min-height: 1em;
+	/* reserve space to avoid layout shift */
+}
+
+
+/* Fullscreen dark overlay */
+#loader-overlay {
+	position: fixed;
+	inset: 0;
+	background: rgba(0, 0, 0, .55);
+	display: none;
+	z-index: 999999;
+	/* above modals */
+}
+
+/* Simple spinner */
+#loader-overlay .spinner {
+	position: absolute;
+	inset: 0;
+	margin: auto;
+	width: 54px;
+	height: 54px;
+	border-radius: 50%;
+	border: 4px solid rgba(255, 255, 255, .35);
+	border-top-color: #fff;
+	animation: spin .9s linear infinite;
+}
+
+@keyframes spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+/* --- Kontainer Utama --- */
+.features-section {
+	width: 100%;
+	max-width: 100%;
+	padding: 60px 20px;
+	text-align: center;
+	background-color: #fbf9fa;
+}
+
+/* --- Header --- */
+.features-header h2 {
+	font-size: 28px;
+	font-weight: 600;
+	color: #2D3748;
+	/* Teks lebih gelap untuk judul */
+	margin-bottom: 12px;
+}
+
+.features-header p {
+	font-size: 16px;
+	line-height: 1.6;
+	max-width: 550px;
+	margin: 0 auto;
+	margin-bottom: 50px;
+}
+
+/* --- Konten (Diagram + Deskripsi) --- */
+.features-content {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+/* --- 1. Diagram Interaktif (Kiri) --- */
+.features-diagram {
+	flex: 1;
+	position: relative;
+	max-width: 370px;
+	/* Ukuran diagram */
+	min-height: 370px;
+	/* Jaga rasio */
+	margin: 0 auto;
+	/* Tengah di mobile */
+}
+
+.diagram-bg {
+	/* Lingkaran latar belakang hijau muda */
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 300px;
+	height: 300px;
+	background-color: #e6f7ec;
+	/* Hijau sangat muda */
+	border-radius: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 1;
+}
+
+.diagram-item {
+	position: absolute;
+	z-index: 2;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	cursor: pointer;
+	background: none;
+	border: none;
+	font-size: 14px;
+	font-weight: 500;
+	color: #555;
+	width: 90px;
+	/* Beri lebar agar teks tidak pecah */
+	text-align: center;
+}
+
+.icon-circle {
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+	background-color: #ffffff;
+	border: 2px solid #e2e8f0;
+	/* Abu-abu muda */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 8px;
+	transition: all 0.3s ease;
+}
+
+.icon-circle svg {
+	width: 40px;
+	height: 40px;
+	color: #a0aec0;
+	/* Ikon abu-abu */
+	transition: all 0.3s ease;
+}
+
+/* --- Posisi Item Diagram --- */
+#btn-lacak {
+	top: 40px;
+	left: 40px;
+}
+
+#btn-evaluasi {
+	top: 40px;
+	right: 40px;
+}
+
+#btn-laporkan {
+	bottom: 40px;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+/* --- Gaya Khusus Item "Laporkan" --- */
+#btn-laporkan .icon-circle {
+	width: 80px;
+	height: 80px;
+	background-color: #38A169;
+	/* Hijau solid */
+	border: none;
+}
+
+#btn-laporkan .icon-circle svg {
+	width: 32px;
+	height: 32px;
+	color: #ffffff;
+	/* Ikon putih */
+}
+
+/* --- Gaya Status Aktif (Dipilih) --- */
+.diagram-item.active .icon-circle {
+	border-color: #38A169;
+	/* Border hijau */
+	box-shadow: 0 0 12px rgba(56, 161, 105, 0.5);
+	/* Bayangan hijau */
+}
+
+.diagram-item.active .icon-circle svg {
+	color: #38A169;
+	/* Ikon hijau */
+}
+
+/* Jaga agar ikon "Laporkan" tetap putih saat aktif */
+#btn-laporkan.active .icon-circle svg {
+	color: #ffffff;
+}
+
+/* --- 2. Deskripsi Fitur (Kanan) --- */
+.features-description {
+	flex: 1;
+	text-align: left;
+	padding-left: 50px;
+}
+
+.description-content {
+	display: none;
+	/* Sembunyikan semua deskripsi */
+	animation: fadeIn 0.5s;
+}
+
+.description-content.active {
+	display: block;
+	/* Tampilkan hanya yang aktif */
+}
+
+.description-icon {
+	width: 44px;
+	height: 44px;
+	border-radius: 50%;
+	background-color: #e6f7ec;
+	/* Latar ikon hijau muda */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 16px;
+}
+
+.description-icon svg {
+	width: 80px;
+	height: 80px;
+	color: #38A169;
+	/* Ikon hijau */
+}
+
+.description-content h3 {
+	font-size: 20px;
+	font-weight: 600;
+	color: #2D3748;
+	margin-bottom: 10px;
+}
+
+.description-content p {
+	font-size: 16px;
+	line-height: 1.7;
+	color: #4A5568;
+}
+
+.description-content p.muted {
+	font-size: 14px;
+	color: #718096;
+	margin-top: 10px;
+}
+
+/* --- Kontainer Utama --- */
+.page-wrapper {
+	width: 100%;
+	max-width: 1100px;
+	margin: 0 auto;
+	padding: 20px;
+}
+
+/* --- 1. Bagian Planet (CTA) --- */
+.planet-section {
+	padding: 60px 0;
+	text-align: center;
+}
+
+/* --- Header Bagian --- */
+.planet-section-header h2 {
+	font-size: 28px;
+	font-weight: 600;
+	color: #2D3748;
+	margin-bottom: 12px;
+}
+
+.planet-section-header p {
+	font-size: 16px;
+	line-height: 1.6;
+	max-width: 550px;
+	margin: 0 auto 50px;
+	color: #6B7280;
+}
+
+/* --- Kontainer Kartu --- */
+.planet-cards-container {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	/* 3 kolom */
+	gap: 24px;
+}
+
+/* --- Kartu Individual --- */
+.planet-card {
+	background-color: #ffffff;
+	border-radius: 12px;
+	padding: 24px;
+	text-align: center;
+	border: 2px solid transparent;
+	/* Border transparan by default */
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+	transition: all 0.3s ease;
+	cursor: pointer;
+}
+
+/* --- Status Aktif Kartu --- */
+.planet-card.active {
+	border-color: #38A169;
+	/* Border hijau (sesuai gambar) */
+	box-shadow: 0 6px 16px rgba(56, 161, 105, 0.2);
+}
+
+/* --- Ikon di dalam Kartu --- */
+.icon-wrapper {
+	width: 56px;
+	height: 56px;
+	border-radius: 12px;
+	margin-bottom: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.icon-wrapper svg {
+	width: 28px;
+	height: 28px;
+}
+
+/* Variasi Warna Ikon */
+.planet-card[data-card="laut"] .icon-wrapper {
+	background-color: #EBF4FF;
+	/* Biru muda */
+	color: #3B82F6;
+	/* Biru */
+}
+
+.planet-card[data-card="bumi"] .icon-wrapper {
+	background-color: #FEFBEB;
+	/* Kuning muda */
+	color: #F59E0B;
+	/* Kuning/Amber */
+}
+
+.planet-card[data-card="lingkungan"] .icon-wrapper {
+	background-color: #E6F7EC;
+	/* Hijau muda */
+	color: #38A169;
+	/* Hijau */
+}
+
+.planet-card h3 {
+	font-size: 18px;
+	font-weight: 600;
+	color: #2D3748;
+	margin-bottom: 8px;
+}
+
+.planet-card p {
+	font-size: 14px;
+	line-height: 1.7;
+	color: #6B7280;
+}
+
+/* --- Navigasi Titik (Pagination) --- */
+.planet-pagination {
+	display: flex;
+	justify-content: center;
+	gap: 8px;
+	margin-top: 32px;
+}
+
+.dot {
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background-color: #D1D5DB;
+	/* Abu-abu */
+	border: none;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.dot.active {
+	background-color: #38A169;
+	/* Hijau */
+}
+
+/* --- 2. Footer --- */
+.main-footer {
+	padding: 24px 0;
+	border-top: 1px solid #E2E8F0;
+	/* Garis pemisah */
+	text-align: center;
+	color: #6B7280;
+	font-size: 14px;
+}
+
+.footer-content {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+	/* Untuk mobile */
+	gap: 20px;
+}
+
+.footer-links {
+	display: flex;
+	gap: 24px;
+	flex-wrap: wrap;
+}
+
+.footer-links a {
+	font-size: 14px;
+	color: #6B7280;
+	text-decoration: none;
+	transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+	color: #2D3748;
+}
+
+/* --- Animasi FadeIn --- */
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* --- Desain Responsif (Mobile) --- */
+@media (max-width: 768px) {
+	.hero-section {
+		flex-direction: column;
+		/* Tumpuk vertikal di mobile */
+		text-align: center;
+		/* Pusatkan teks */
+		gap: 32px;
+	}
+
+	.hero-content {
+		max-width: 100%;
+		/* Lebar penuh di mobile */
+	}
+
+	.features-content {
+		flex-direction: column;
+	}
+
+	.features-diagram {
+		margin-bottom: 40px;
+	}
+
+	.features-description {
+		padding-left: 0;
+		text-align: center;
+	}
+
+	.description-icon {
+		margin: 0 auto 16px;
+		/* Ikon di tengah */
+	}
+
+	.planet-cards-container {
+		grid-template-columns: 1fr;
+		/* 1 kolom */
+		gap: 20px;
+	}
+
+	.planet-section-header p {
+		margin-bottom: 30px;
+	}
+
+	.footer-content {
+		flex-direction: column;
+		/* Tumpuk di mobile */
+		align-items: center;
+	}
+
+	.footer-links {
+		justify-content: center;
+		gap: 16px;
+	}
+
+}
+
+/* --- Desain Responsif (Laptop) --- */
+@media (min-width: 1024px) {
+	.features-content {
+		margin: 0 8rem;
+	}
+}
+
+
+/* --- Desain Responsif (Desktop) --- */
+@media (min-width: 1440px) {
+	.features-content {
+		margin: 0 12rem;
+	}
+}

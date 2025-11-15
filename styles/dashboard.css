@@ -1,0 +1,132 @@
+/* === SIPLIK Green Theme Overrides === */
+.brand-link .brand-text { font-weight:700; letter-spacing:.4px; }
+/* === SIPLIK Typography to match landing page === */
+
+/* Base font across AdminLTE */
+body, .main-sidebar, .content-wrapper, .main-header, .navbar, .brand-link,
+.nav-sidebar .nav-link, .card, .small-box, .table, footer {
+  font-family: 'Poppins', 'Segoe UI', sans-serif !important;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #1f2937; /* soft dark gray text color for readability */
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6,
+.card-title, .brand-text, .nav-header {
+  font-family: 'Poppins', 'Segoe UI', sans-serif !important;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: darkslategray; /* match green accent */
+}
+
+/* Sidebar text color override for better contrast */
+.main-sidebar .nav-link,
+.main-sidebar .brand-link,
+.main-sidebar .user-panel a {
+  font-weight: 500;
+  color: #e8f5e9;
+}
+
+/* Table and body content */
+.table, .card-body, .small-box .inner {
+  font-size: 0.95rem;
+}
+
+/* Buttons and badges */
+.btn, .badge {
+  font-family: 'Poppins', 'Segoe UI', sans-serif !important;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+}
+
+/* Footer */
+.main-footer {
+  font-size: 0.85rem;
+  color: #607d8b;
+}
+
+
+/* Sidebar: dark green background */
+.main-sidebar {
+    /* background-color: #1b5e20 !important; */
+    background: radial-gradient(circle at 50% 0, #36b36a 0%, #1a8d4a 100%) !important;    color: #e8f5e9;
+  }
+  
+  /* Sidebar brand text */
+  .brand-link {
+    border-bottom: 1px solid #bebdbd !important;
+    text-align: center;
+  }
+  .brand-link .brand-text {
+    color: #ffffff !important;
+  }
+  
+  /* Sidebar nav links */  .nav-sidebar > .nav-item > .nav-link {
+    color: #e8f5e9;
+    transition: background-color .2s ease, color .2s ease;
+  }
+  
+  /* Hover state */
+  .nav-sidebar > .nav-item > .nav-link:hover {
+    background-color: rgba(255,255,255,0.1);
+    color: #ffffff;
+  }
+  
+  /* Active link: grey/dark style */
+  .nav-sidebar > .nav-item > .nav-link.active {
+    background-color: #37474f !important; /* dark grey */
+    color: #ffffff !important;
+  }
+  
+  /* Active icon */
+  .nav-sidebar > .nav-item > .nav-link.active i {
+    color: #f1f1f1 !important;
+  }
+  
+  /* Submenu items */
+  .nav-sidebar .nav-treeview > .nav-item > .nav-link {
+    color: #f1f1f1;
+  }
+  .nav-sidebar .nav-treeview > .nav-item > .nav-link.active {
+    background-color: #455a64 !important;
+  }
+  
+  
+  /* Buttons: use neutral/grey tone instead of blue */
+  .btn-primary {
+    background-color: #455a64 !important; /* dark grey-blue */
+    border-color: #455a64 !important;
+  }
+  .btn-primary:hover {
+    background-color: #37474f !important;
+    border-color: #37474f !important;
+  }
+  
+  /* Info boxes (optional green hue) */
+  .small-box.bg-info {
+    background-color: #43a047 !important; /* leaf green */
+  }
+  .small-box .icon i {
+    opacity: 0.7;
+  }
+  
+
+/* Fullscreen dark overlay */
+#loader-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  display: none;
+  z-index: 999999; /* above modals */
+}
+
+/* Simple spinner */
+#loader-overlay .spinner{
+  position: absolute; inset: 0; margin: auto;
+  width: 54px; height: 54px; border-radius: 50%;
+  border: 4px solid rgba(255,255,255,.35);
+  border-top-color: #fff;
+  animation: spin .9s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }

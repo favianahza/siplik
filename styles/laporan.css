@@ -1,0 +1,402 @@
+/* === Layout & Structure === */
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  background-color: #f5f5f5;
+  font-size: 16px;
+}
+
+/* Title */
+main h1 {
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  
+}
+
+/* Form wrapper */
+form:not(.modal form) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  background-color: #ffffff;
+  padding: 2rem 3rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 700px;
+}
+
+/* Group blocks */
+.form-group {
+  width: 100%;
+}
+
+/* Head labels (bold section titles) */
+label:not(.modal label) {
+  font-weight: 6000;
+  display: block;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* Small grey helper labels */
+.sub-label {
+  display: block;
+  text-align: center;
+  color: #4a4e57;        /* muted grey */
+  margin-bottom: 0.35rem;
+  font-size: 0.85rem;
+}
+
+/* === Dropdown styling with placeholder === */
+select {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #1f2937; /* default text color */
+  font-weight: 600; /* match title weight */
+}
+
+/* Placeholder (first hidden option) */
+select:invalid {
+  color: #9ca3af; /* grey placeholder text */
+  font-weight: 500;
+  text-transform: none;
+}
+
+/* Reset placeholder color when value is chosen */
+select option {
+  color: #1f2937;
+}
+
+/* Optional subtle hover/focus */
+select:hover, select:focus {
+  border-color: #1b5e20;
+  box-shadow: 0 0 0 2px rgba(27,94,32,0.1);
+  outline: none;
+}
+
+
+/* Fields row: Kecamatan + Kelurahan */
+.lokasi-row {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.lokasi-row .field {
+  flex: 1;
+}
+
+/* Alamat row (new line under lokasi-row) */
+.alamat-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  width: 100%;
+}
+
+/* Inputs */
+select,
+input[type="text"],
+input[type="file"] {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+}
+
+/* === Match Textarea & Date Input style with text boxes === */
+textarea,
+input[type="date"] {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  font-size: 1rem;
+  color: #1f2937;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+/* Hover & focus effect same as other inputs */
+textarea:hover,
+input[type="date"]:hover,
+textarea:focus,
+input[type="date"]:focus {
+  border-color: #1b5e20;
+  box-shadow: 0 0 0 2px rgba(27, 94, 32, 0.1);
+  outline: none;
+}
+
+textarea::placeholder {
+  color: #9ca3af;            /* same soft grey as first input */
+  font-size: 0.95rem;
+  font-weight: 400;
+  font-family: calibri;
+}
+
+/* Target your field specifically */
+textarea[name="deskripsi_laporan"]{
+  font-family: inherit;      /* use the same font as the page */
+  font-size: 0.9rem;         /* ~14–15px; adjust as needed */
+  line-height: 1.4;
+}
+
+/* Optional: keep placeholder consistent & smaller too */
+textarea[name="deskripsi_laporan"]::placeholder{
+  font-size: 0.9rem;
+}
+
+
+/* Normalize <input type="date"> text look */
+input[type="date"],
+.form-control[type="date"]{
+  font-family: inherit;        /* match the page font */
+  font-size: 0.95rem;          /* adjust as you like */
+  color: #212529;              /* readable dark text */
+  -webkit-text-fill-color: #212529; /* fix Safari/Chrome white text */
+  text-transform: uppercase;
+}
+
+/* Ensure the inner parts use the same color */
+input[type="date"]::-webkit-datetime-edit,
+input[type="date"]::-webkit-datetime-edit-text,
+input[type="date"]::-webkit-datetime-edit-year-field,
+input[type="date"]::-webkit-datetime-edit-month-field,
+input[type="date"]::-webkit-datetime-edit-day-field{
+  color: inherit;
+  -webkit-text-fill-color: inherit;
+}
+
+/* Optional: keep the calendar icon visible on light backgrounds */
+input[type="date"]::-webkit-calendar-picker-indicator{
+  opacity: .8;
+}
+
+/* Autofill can force white text—override it */
+input[type="date"]:-webkit-autofill{
+  -webkit-text-fill-color: #212529 !important;
+  transition: background-color 9999s ease-out 0s; /* hides yellow bg */
+}
+
+
+/* Submit button */
+button .button {
+  margin-top: 0.5rem;
+  padding: 0.75rem 2rem;
+  background-color: #1b5e20; /* SIPLIK green */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+button .button:hover {
+  background-color: #144d19;
+}
+
+/* === Data Kontak Pelapor === */
+.kontak-row {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.kontak-row .field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.kontak-row input {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+}
+
+/* === Reusable Custom Checkbox === */
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.1rem;
+  user-select: none;
+}
+
+
+/* Label text */
+.custom-checkbox .checkbox-label {
+  font-weight: 100;
+  color: #555555!important;
+  margin-top: .4rem;
+  cursor: pointer;
+  text-transform: none;
+  font-size: 14px;
+}
+
+/* Optional smaller variant (example) */
+.custom-checkbox.small input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  border-width: 1.5px;
+}
+.custom-checkbox.small label {
+  font-size: 0.9rem;
+}
+
+/* Greyed-out look when disabled */
+.disabled-field {
+  background-color: #f0f0f0!important;
+  color: #777;
+  cursor: not-allowed;
+}
+
+.captcha {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+/* === Info Helper for Kategori Pengaduan === */
+.info-helper-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.info-helper {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #6b7280; /* grey */
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  align-self: center;
+}
+
+/* Icon styling */
+.info-icon {
+  display: inline-block;
+  position: relative;
+  font-weight: 700;
+  color: #000; /* Bold Black Icon */
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Tooltip bubble — soft comfort palette */
+.info-icon .info-tooltip {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  top: 130%; /* below the icon */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0,0,0,.88); /* soft beige-white */
+  color: white;            /* dark grey text */
+  padding: 1rem 1.2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 500px;
+  max-width: 100vw;
+  text-align: center;
+  line-height: 1.5;
+  font-size: 0.9rem;
+  z-index: 10;
+  border: 1px solid #e5e7eb; /* soft border */
+  transition: opacity 0.2s ease;
+}
+
+/* Tooltip visible on hover/focus */
+.info-icon:hover .info-tooltip,
+.info-icon:focus .info-tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Tooltip arrow (softer neutral tone) */
+.info-icon .info-tooltip::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 8px;
+  border-style: solid;
+  border-color: transparent transparent #fefcf7 transparent;
+}
+
+/* === Primary Action Button: KIRIM LAPORAN === */
+.submit-laporan {
+  margin-top: 1.5rem;
+  padding: 1rem 3rem;                  /* larger padding */
+  background-color: #0ec04f;           /* calm medium-green */
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;                    /* strong but clean */
+  font-size: 1.1rem;                   /* slightly bigger text */
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 8px rgba(46, 125, 50, 0.25);
+}
+
+/* Hover + focus state (slightly darker & lifted) */
+.submit-laporan:hover,
+.submit-laporan:focus  {
+  background-color: #1b5e20;           /* darker green */
+  box-shadow: 0 6px 14px rgba(27, 94, 32, 0.35);
+  transform: translateY(-1px);
+}
+
+/* Active state (pressed feel) */
+.submit-laporan:active {
+  background-color: #0ec04f;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  transform: translateY(0);
+}
+
+/* Optional: make it full width on small screens */
+@media (max-width: 600px) {
+  button[type="submit"] {
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.9rem 0;
+  }
+}
+
+
+/* Responsive: stack vertically on smaller screens */
+@media (max-width: 500px) {
+  .info-icon .info-tooltip {
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50vw;
+  }
+}
+
+@media (max-width: 700px) {
+  .kontak-row {
+    flex-direction: column;
+  }
+}
