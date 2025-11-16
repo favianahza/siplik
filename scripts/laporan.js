@@ -1,5 +1,8 @@
 $(function () {
 
+  let today = new Date().toISOString().split("T")[0];
+  $("#tanggal_kejadian").attr("max", today);
+
   // --- Anonim toggle ---
   const $anon = $('#anonim');
   const $fields = $(
@@ -114,6 +117,7 @@ $(function () {
       return;
     }
 
+    const captcha = grecaptcha.getResponse(); 
     const fd = new FormData($form[0]); // includes <input type="file" name="bukti">
 
     if($("#anonim").prop("checked") === false){

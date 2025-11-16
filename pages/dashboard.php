@@ -88,6 +88,7 @@ if(!isset($_SESSION["logged_in"])){
               <li class="nav-item"><a href="#laporan_masuk" class="nav-link text-white my-2" data-load="laporan_masuk"><i class="fa fa-arrow-circle-right nav-icon"></i><p>Laporan Masuk</p></a></li>
               <li class="nav-item"><a href="#laporan_diproses" class="nav-link text-white my-2" data-load="laporan_diproses"><i class="fa fa-info-circle nav-icon"></i><p>Laporan Diproses</p></a></li>
               <li class="nav-item"><a href="#arsip_laporan" class="nav-link text-white my-2" data-load="arsip_laporan"><i class="fa fa-archive nav-icon"></i><p>Arsip Laporan</p></a></li>
+              <li class="nav-item my-1"><a href="#petugas" class="nav-link" data-load="list_petugas"><i class="nav-icon fas fa-users"></i><p> List Petugas</p></a></li>
 <?php else: ?>
               <li class="nav-item"><a href="#laporan_ditugaskan" class="nav-link text-white my-2" data-load="laporan_ditugaskan"><i class="fa fa-arrow-circle-right nav-icon"></i><p>Laporan Ditugaskan</p></a></li>
               <li class="nav-item"><a href="#laporan_selesai" class="nav-link text-white my-2" data-load="laporan_selesai"><i class="fa fa-check-circle nav-icon"></i><p>Laporan Selesai</p></a></li>
@@ -96,7 +97,6 @@ if(!isset($_SESSION["logged_in"])){
             </ul>
           </li>
           <!-- <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon fas fa-map-marker-alt"></i><p>Peta Lokasi</p></a></li> -->
-          <li class="nav-item my-1"><a href="#petugas" class="nav-link" data-load="list_petugas"><i class="nav-icon fas fa-users"></i><p> List Petugas</p></a></li>
           <li class="nav-item my-1"><a href="#" class="nav-link" data-load="analitik"><i class="nav-icon fas fa-chart-line"></i><p>Analitik</p></a></li>
           <li class="nav-item mt-2 my-1">
             <hr>

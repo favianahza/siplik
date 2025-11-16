@@ -45,7 +45,7 @@ function initLaporanDitugaskan() {
         deferRender: true,
         paging: true,
         pageLength,
-        lengthChange: true,   // user can choose 10/25/50/…
+        lengthChange: true,
         searching: true,
         ordering: true,
         columns: [
@@ -74,7 +74,8 @@ function initLaporanDitugaskan() {
             searchable: false,
             render: (ticket, type, row) => `
             <div class="d-flex flex-wrap justify-content-center">
-                <a href="#detail" data-ticket="${encodeURIComponent(ticket)}" data-backload="laporan_ditugaskan" class="btn btn-sm w-100 w-lg-0 mb-2 bg-primary text-white detail">DETAIL</a>
+              <a href="#tindak_lanjut" data-ticket="${encodeURIComponent(ticket)}" class="btn btn-sm w-100 w-lg-0 bg-warning text-white tindak_lanjut mb-2" >TINDAK LANJUT</a>
+              <a href="#detail" data-ticket="${encodeURIComponent(ticket)}" data-backload="laporan_ditugaskan" class="btn btn-sm w-100 w-lg-0 bg-primary text-white detail">DETAIL</a>
             </div>`
           },
         ],
@@ -228,5 +229,77 @@ $(document).on('click', 'a.detail[data-ticket]', function (e) {
         <button class="btn btn-outline-secondary" id="btn-back">Kembali</button>
       </div>
     `);
+  });
+});
+
+
+
+
+// Create Tindak Lanjut
+$(document).on("click", 'a.tindak_lanjut[data-ticket]', function (e) {
+  e.preventDefault();
+
+  const ticketCode = $(this).data('ticket');
+  const token = "MY_SUPER_SECRET_TOKEN";
+
+  openModal($('#tindak-lanjut-modal'),$('#tindak-lanjut-title'));
+  $('#kode_tiket_tindak_lanjut').text(`Kode Tiket : ${ticketCode}`);
+  
+  
+
+
+  $(document).on('click', '#create_tindak_lanjut', function (e) {
+    e.preventDefault();
+
+    const $btn  = $(this);
+    const petugasId = String($btn.data('id') || '').trim(); // from data-id attribute
+
+    let fd = new FormData($("#tindak_lanjut_form")[0]);
+
+    if (!ticketCode) {
+      failed('Kode tiket tidak ditemukan.');
+      return;
+    }
+
+    // UI state
+    const originalText = $btn.text();
+    $btn.prop('disabled', true).text('MENGIRIM…');
+    if (typeof showLoader === 'function') showLoader();
+
+    // --- Send POST request ---
+    $.ajax({
+      url: `https://app.faps.my.id/api/tindak_lanjut/ticket/${encodeURIComponent(ticketCode)}`,
+      method: 'POST',
+      processData: false,
+      contentType: false,
+      data: fd,
+      dataType: 'json',
+      headers: { 'Accept': 'application/json', 'Authorization': `Bearer ${token}`},
+      timeout: 15000
+    })
+    .done(function (res) {
+      Swal.fire({
+        icon: "success",
+        title: "Berhasil!",
+        text: "Berhasil membuat laporan tindak lanjut!",
+        showConfirmButton: false,
+        showCancelButton: true,
+        cancelButtonText: "OK"
+      }).then((result) => {
+         closeModal($('#tindak-lanjut-modal'));
+         setTimeout(() => {
+           loadComponent("laporan_ditugaskan");
+         }, 500);
+      });      
+      
+    })
+    .fail(function (jqXHR) {
+      const msg = jqXHR?.status;
+      failed(msg);
+    })
+    .always(function () {
+      if (typeof hideLoader === 'function') hideLoader();
+      $btn.prop('disabled', false).text(originalText || 'Simpan Alokasi');
+    });
   });
 });

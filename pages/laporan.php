@@ -147,9 +147,9 @@ $kecamatan = Database::fetchAll("SELECT * from ref_kecamatan")
 
         </div>
 
-        <!-- <div class="captcha">
+        <div class="captcha">
           <div class="g-recaptcha" data-sitekey="6Ld5xvUrAAAAAK8WETwxt_rIOtV-NcqKSX1jOrK0"></div>
-        </div> -->
+        </div>
 
       </div>
 

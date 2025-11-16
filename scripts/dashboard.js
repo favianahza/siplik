@@ -130,6 +130,7 @@ function openModal($modal, $focusEl) {
 
 function closeModal($modal) {
   $modal.removeClass('is-open').attr('aria-hidden', 'true');
+  $('body').removeClass('modal-open').css('overflow', '');
 }
 
 // --- Change password (by user ID) ---
@@ -207,3 +208,8 @@ $(document).ready(function () {
   }
 });
 
+
+$(document).on('click', '[data-close-modal]', function () {
+    $(this).closest('.modal').removeClass('show');
+    $('body').removeClass('modal-open').css('overflow', '');
+});

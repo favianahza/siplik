@@ -40,7 +40,7 @@
   /* display: flex; */
   align-items: center;
   justify-content: center;
-  z-index: 50;
+  z-index: 1056;
 }
 .modal.is-open { display: flex; }
 
@@ -53,7 +53,7 @@
 
 .modal-card {
   position: relative;
-  width: min(560px, calc(100% - 2rem));
+  width: min(760px, calc(100% - 2rem));
   background: #fff;
   border-radius: var(--radius);
   box-shadow: var(--shadow-lg);
@@ -130,11 +130,6 @@ input:focus-visible {
 }
 .form-footnote a.modal-link { color: var(--color-primary); text-decoration: none; }
 .form-footnote a.modal-link:hover { text-decoration: underline; }
-
-/* Prevent background scroll when modal open */
-body.modal-open {
-  overflow: hidden;
-}
 
 /* === Inline Radio Button Group === */
 .radio-inline-group {

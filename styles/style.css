@@ -1041,8 +1041,8 @@ body.modal-open {
 }
 
 .dot {
-	width: 8px;
-	height: 8px;
+	width: 16px;
+	height: 16px;
 	border-radius: 50%;
 	background-color: #D1D5DB;
 	/* Abu-abu */
