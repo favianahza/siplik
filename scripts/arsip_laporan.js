@@ -81,10 +81,13 @@ function initArsipLaporanTable() {
             data: "ticket_code",
             orderable: false,
             searchable: false,
-            render: (ticket, type, row) => `
-            <div class="d-flex flex-wrap justify-content-center">
-                <a href="#detail" data-ticket="${encodeURIComponent(ticket)}"class="btn btn-sm w-100 w-lg-0 mb-2 bg-primary text-white detail">DETAIL</a>
-            </div>`
+            render: (ticket, type, row) => {
+                if (row.status == 'ditolak') {
+                  return `<div class="d-flex flex-wrap justify-content-center"><a href="#detail" data-ticket="${encodeURIComponent(ticket)}" data-backload="arsip_laporan" class="btn btn-sm w-100 w-lg-0 mb-2 bg-primary text-white detail">DETAIL</a></div>`
+                } else {
+                  return `<div class="d-flex flex-wrap justify-content-center"><a href="#detail_selesai" data-ticket="${encodeURIComponent(ticket)}" data-backload="arsip_laporan" class="btn btn-sm w-100 w-lg-0 mb-2 bg-primary text-white detail_selesai">DETAIL</a></div>`
+                }
+            }
           },
         ],
         language: {

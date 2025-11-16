@@ -37,6 +37,17 @@ function success(text, title="Berhasil!"){
     });
 }
 
+function info(text, title="Informasi"){
+    return Swal.fire({
+        icon: "info",
+        title: title,
+        text: text,
+        showConfirmButton: false,
+        showCancelButton: true,
+        cancelButtonText: "OK"
+    });
+}
+
 // -- Logout --
 $(document).on('click', '#logout', function (e) {
     e.preventDefault();

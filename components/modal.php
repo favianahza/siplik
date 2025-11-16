@@ -97,3 +97,30 @@
 
     </div>
   </div>
+
+
+
+  <!-- Floating Check Laporan Modal -->
+  <div class="modal" id="check-laporan-modal" role="dialog" aria-modal="true" aria-labelledby="check-laporan-title" aria-describedby="check-laporan-desc" aria-hidden="true">
+    <div class="modal-overlay" data-close-modal></div>
+
+    <div class="modal-card" role="document">
+      <button class="modal-close" type="button" aria-label="Tutup modal" data-close-modal>×</button>
+
+      <header class="modal-header">
+        <h2 id="check-laporan-title">Check Laporan</h2>
+        <p id="check-laporan-desc">Masukan kode tiket untuk mengecek status laporan</p>
+      </header>
+
+      <form class="modal-form" action="#" novalidate name="check_ticket_form">
+        <div class="form-row" style="justify-content: center">
+          <input id="ticket_code_input" name="ticket_code" maxlength="10" type="text" placeholder="Masukan Kode Tiket" autocomplete="off" required/>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary" id="check">Check</button>
+        </div>
+      </form>
+
+    </div>
+  </div>

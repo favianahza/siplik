@@ -75,7 +75,7 @@ function initArsipLaporanProses() {
             searchable: false,
             render: (ticket, type, row) => `
             <div class="d-flex flex-wrap justify-content-center">
-                <a href="#detail" data-ticket="${encodeURIComponent(ticket)}"class="btn btn-sm w-100 w-lg-0 mb-2 bg-primary text-white detail">DETAIL</a>
+                <a href="#detail" data-ticket="${encodeURIComponent(ticket)}" data-backload="laporan_diproses" class="btn btn-sm w-100 w-lg-0 mb-2 bg-primary text-white detail">DETAIL</a>
             </div>`
           },
         ],

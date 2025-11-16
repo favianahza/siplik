@@ -15,17 +15,18 @@
 
             <div class="navbar-right">
                 <ul>
-                    <li><a href="<?= BASE_URL . '/index' ?>">Beranda</a></li>
                     <li><a href="<?= BASE_URL . '#tentang_kami' ?>">Tentang Kami</a></li>
                     <li><a href="<?= BASE_URL . '#faq' ?>">FAQ</a></li>
                     
                     <?php if(!isset($_SESSION["logged_in"])): ?>
-                        <li><a href="#daftar" class="btn-primary">Daftar</a></li>
+                        <li><a href="#daftar">Daftar</a></li>
                         <li><a href="#login">Login</a></li>
                     <?php else: ?>
                         <li><a href="<?= BASE_URL . '/dashboard' ?>">Dashboard</a></li>
                         <li><a href="#logout" id="logout">Logout</a></li>
                     <?php endif; ?>
+                    <li><a href="<?= BASE_URL . '/lapor'?>">Buat Laporan</a></li>
+                    <li><a href="#lacak" class="navbar-link-primary">Lacak Laporan</a></li>
                 </ul>
             </div>
         </nav>
