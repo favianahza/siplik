@@ -29,7 +29,7 @@ secureSessionStart();
         </div>
 
         <div class="hero-image">
-            <img src="https://images.unsplash.com/photo-1684827182328-374fa4b8088e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxncmVlbiUyMGNpdHklMjBwYXJrfGVufDF8fHx8MTc2MjAwMzEzOHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" alt="Pemandangan taman kota yang asri">
+            <img src="<?= BASE_URL . "/assets/photo-1684827182328-374fa4b8088e.jpg"?>" alt="Pemandangan taman kota yang asri">
         </div>
     </section>
 

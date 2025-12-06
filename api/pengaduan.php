@@ -351,6 +351,84 @@ function addPengaduan() {
 }
 
 
+function getPengaduanLastFiveDay() 
+{
+    $query = "SELECT DATE(created_at) AS tanggal, COUNT(*) AS total_laporan FROM pengaduan GROUP BY DATE(created_at) ORDER BY tanggal DESC LIMIT 5;";
+    $result = Database::fetchAll($query);
+    return checkResource($result);
+}
+
+
+function getPengaduanLastFiveMonth() 
+{
+    $query = "SELECT DATE_FORMAT(created_at, '%M') AS bulan, COUNT(*) AS total_laporan FROM pengaduan GROUP BY DATE_FORMAT(created_at, '%M') ORDER BY bulan ASC;";
+    $result = Database::fetchAll($query);
+    return checkResource($result);
+}
+
+function getPengaduanByCategory() 
+{
+    $query = "SELECT status, COUNT(*) AS total FROM pengaduan GROUP BY status;";
+    $result = Database::fetchAll($query);
+    return checkResource($result);
+}
+
+function getPengaduanByKecamatan() 
+{
+    $query = "SELECT kc.nama AS kecamatan, COUNT(p.id) AS total_laporan FROM pengaduan p LEFT JOIN ref_kecamatan kc ON p.kecamatan_id = kc.id GROUP BY kc.nama ORDER BY total_laporan DESC";
+    $result = Database::fetchAll($query);
+    return checkResource($result);
+}
+
+function getPengaduanByKelurahan() 
+{
+    $query = "SELECT kc.nama AS kecamatan, kl.nama AS kelurahan, COUNT(p.id) AS total_pengaduan FROM pengaduan p LEFT JOIN ref_kecamatan kc ON p.kecamatan_id = kc.id LEFT JOIN ref_kelurahan kl ON p.kelurahan_id = kl.id GROUP BY kc.nama, kl.nama ORDER BY total_pengaduan DESC LIMIT 10;";
+    $result = Database::fetchAll($query);
+    return checkResource($result);
+}
+
+function getTotalLaporanMasukHariIni() 
+{
+    $query = "SELECT COUNT(*) AS total 
+              FROM pengaduan 
+              WHERE DATE(created_at) = CURDATE()";
+
+    $result = Database::fetch($query);
+    return checkResource($result);
+}
+
+function getTotalLaporanAktif() 
+{
+    $query = "SELECT COUNT(*) AS total
+              FROM pengaduan
+              WHERE status IN ('masuk','diverifikasi','diproses')";
+
+    $result = Database::fetch($query);
+    return checkResource($result);
+}
+
+function getTotalLaporanSelesaiBulanIni() 
+{
+    $query = "SELECT COUNT(*) AS total
+              FROM pengaduan
+              WHERE status = 'selesai'
+              AND DATE_FORMAT(created_at, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')";
+
+    $result = Database::fetch($query);
+    return checkResource($result);
+}
+
+function getTotalLaporanDitolak() 
+{
+    $query = "SELECT COUNT(*) AS total
+              FROM pengaduan
+              WHERE status = 'ditolak'";
+
+    $result = Database::fetch($query);
+    return checkResource($result);
+}
+
+
 if ($method === 'GET' && ctype_digit($resource) && (strlen($resource) < 10) ) {
     // api/pengaduan/<ID>
     checkId($resource);
@@ -376,7 +454,56 @@ if ($method === 'GET' && ctype_digit($resource) && (strlen($resource) < 10) ) {
 
     echo $data ? json_encode($data) : (http_response_code(404) && json_encode(['error' => 'Pengaduan not found']));
 
-}  else if($method === 'PATCH' && (strlen($resource) == 10) && isset($_GET["verify"])){
+} else if ($method === 'GET' && $resource == "fiveday") { 
+    // api/pengaduan/fiveday
+    $data = getPengaduanLastFiveDay();
+    echo $data ? json_encode($data) : (http_response_code(404) && json_encode(['error' => 'Pengaduan not found']));
+
+} else if ($method === 'GET' && $resource == "fivemonth") { 
+    // api/pengaduan/fiveday
+    $data = getPengaduanLastFiveMonth();
+    echo $data ? json_encode($data) : (http_response_code(404) && json_encode(['error' => 'Pengaduan not found']));
+    
+} else if ($method === 'GET' && $resource == "category") { 
+    // api/pengaduan/category
+    $data = getPengaduanByCategory();
+    echo $data ? json_encode($data) : (http_response_code(404) && json_encode(['error' => 'Pengaduan not found']));
+
+} else if ($method === 'GET' && $resource == "kecamatan") { 
+    // api/pengaduan/kecamatan
+    $data = getPengaduanByKecamatan();
+    echo $data ? json_encode($data) : (http_response_code(404) && json_encode(['error' => 'Pengaduan not found']));
+
+}  else if ($method === 'GET' && $resource == "kelurahan") { 
+    // api/pengaduan/kelurahan
+    $data = getPengaduanByKelurahan();
+    echo $data ? json_encode($data) : (http_response_code(404) && json_encode(['error' => 'Pengaduan not found']));
+
+} else if ($method === 'GET' && $resource == "masuk-hari-ini") { 
+    // api/pengaduan/masuk-hari-ini
+    $data = getTotalLaporanMasukHariIni();
+    echo $data ? json_encode($data)
+               : (http_response_code(404) && json_encode(['error' => 'Data not found']));
+
+} else if ($method === 'GET' && $resource == "aktif") { 
+    // api/pengaduan/aktif
+    $data = getTotalLaporanAktif();
+    echo $data ? json_encode($data)
+               : (http_response_code(404) && json_encode(['error' => 'Data not found']));
+
+} else if ($method === 'GET' && $resource == "selesai-bulan-ini") { 
+    // api/pengaduan/selesai-bulan-ini
+    $data = getTotalLaporanSelesaiBulanIni();
+    echo $data ? json_encode($data)
+               : (http_response_code(404) && json_encode(['error' => 'Data not found']));
+
+} else if ($method === 'GET' && $resource == "ditolak") { 
+    // api/pengaduan/ditolak
+    $data = getTotalLaporanDitolak();
+    echo $data ? json_encode($data)
+               : (http_response_code(404) && json_encode(['error' => 'Data not found']));
+
+} else if($method === 'PATCH' && (strlen($resource) == 10) && isset($_GET["verify"])){
     // api/pengaduan/<TICKET_CODE>?verifikasi=true
     verifyPengaduanByTicketCode($resource);
 

@@ -32,6 +32,10 @@ $(function () {
   function closeModal($modal) {
     $modal.removeClass('is-open').attr('aria-hidden', 'true');
 
+    $modal.find('form').each(function() {
+        this.reset();
+    });    
+
     // If none open, remove body flag
     if (!$loginModal.is('.is-open') && !$registerModal.is('.is-open')) {
       $('body').removeClass('modal-open');

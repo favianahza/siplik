@@ -131,6 +131,9 @@ function openModal($modal, $focusEl) {
 function closeModal($modal) {
   $modal.removeClass('is-open').attr('aria-hidden', 'true');
   $('body').removeClass('modal-open').css('overflow', '');
+  $modal.find('form').each(function() {
+      this.reset();
+  });  
 }
 
 // --- Change password (by user ID) ---

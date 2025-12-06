@@ -231,6 +231,30 @@ function changeUserPassword($id)
     }
 }
 
+function getPetugasLapanganStatus() {
+    $query = "SELECT 
+    u.id AS petugas_id,
+    u.name AS petugas_nama,
+
+    -- Aduan yang sedang dikerjakan (status != selesai)
+    SUM(CASE WHEN p.status IN ('masuk','diverifikasi','diproses') 
+             AND p.assigned_to = u.id 
+             THEN 1 ELSE 0 END) AS tugas_aktif,
+
+    -- Aduan selesai berdasarkan tindak lanjut
+    SUM(CASE WHEN p.status = 'selesai' 
+             AND p.assigned_to = u.id 
+             THEN 1 ELSE 0 END) AS tugas_selesai
+
+    FROM users u
+    LEFT JOIN pengaduan p 
+       ON p.assigned_to = u.id
+    WHERE u.role = 'Petugas Lapangan'
+    GROUP BY u.id, u.name
+    ORDER BY tugas_aktif DESC;";
+
+    return Database::fetchAll($query);
+}
 
 if ($method === 'GET' && is_numeric($resource)) {
     // api/users/<ID>
@@ -239,7 +263,13 @@ if ($method === 'GET' && is_numeric($resource)) {
     $data = getUserById((int)$id);
     echo $data ? json_encode($data) : (http_response_code(404) && json_encode(['error' => 'User not found']));
 
-} else if($method === 'GET' && $resource == "petugas" ){
+} else if($method === 'GET' && $resource == "petugas" && isset($_GET["status"])) {
+    // api/users/petugas?status
+    $data = getPetugasLapanganStatus();
+    echo $data ? json_encode($data) : (http_response_code(404) && json_encode(['error' => 'User not found']));
+
+}    
+    else if($method === 'GET' && $resource == "petugas" ){
     // api/users/petugas
     getPetugasLapangan();
 

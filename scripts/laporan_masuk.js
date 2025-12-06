@@ -657,8 +657,6 @@ $(document).on("click", 'a.alokasi[data-ticket]', function (e) {
     $btn.prop('disabled', true).text('MENGIRIM…');
     if (typeof showLoader === 'function') showLoader();
 
-    console.log(selectedPetugas)
-
     // --- Send PATCH request ---
     $.ajax({
       url: `https://app.faps.my.id/api/pengaduan/${encodeURIComponent(ticketCode)}?petugas=${encodeURIComponent(selectedPetugas)}`,

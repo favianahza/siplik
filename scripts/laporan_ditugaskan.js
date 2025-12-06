@@ -256,6 +256,7 @@ $(document).on("click", 'a.tindak_lanjut[data-ticket]', function (e) {
 
     let fd = new FormData($("#tindak_lanjut_form")[0]);
 
+
     if (!ticketCode) {
       failed('Kode tiket tidak ditemukan.');
       return;
@@ -287,6 +288,7 @@ $(document).on("click", 'a.tindak_lanjut[data-ticket]', function (e) {
         cancelButtonText: "OK"
       }).then((result) => {
          closeModal($('#tindak-lanjut-modal'));
+         $('#tindak_lanjut_form')[0].reset();
          setTimeout(() => {
            loadComponent("laporan_ditugaskan");
          }, 500);

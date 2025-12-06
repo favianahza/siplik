@@ -134,6 +134,7 @@ if(!isset($_SESSION["logged_in"])){
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script type="text/javascript" src="scripts/utils.js"></script>
 <script type="text/javascript" src="scripts/dashboard.js"></script>
+<script type="text/javascript" src="scripts/analitik.js"></script>
 <?php if($_SESSION["user_role"] == "Petugas DLHK") : ?>
 <script type="text/javascript" src="scripts/laporan_masuk.js"></script>
 <script type="text/javascript" src="scripts/laporan_diproses.js"></script>
