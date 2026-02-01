@@ -1,0 +1,158 @@
+/* ===============================
+   Responsive Info Cards
+   =============================== */
+
+/* Main */
+main {
+    margin: 0px 2em;
+}
+
+/* Container */
+.info-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-top: 1.5rem;
+  margin: 0px 1.5rem;
+}
+
+/* Card base */
+.info-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1.2rem 1.4rem;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  border: 1px solid rgb(231, 230, 230);
+}
+
+.info-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.08);
+}
+
+/* Text */
+.info-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  opacity: 0.85;
+  margin-bottom: 0.4rem;
+}
+
+.info-value {
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+/* Color themes */
+.info-primary {
+  border-left: 6px solid #1976d2;
+  color: #1976d2;
+}
+
+.info-success {
+  border-left: 6px solid #2e7d32;
+  color: #2e7d32;
+}
+
+.info-warning {
+  border-left: 6px solid #f9a825;
+  color: #f9a825;
+}
+
+.info-danger {
+  border-left: 6px solid #d32f2f;
+  color: #d32f2f;
+}
+
+
+/* Chart related */
+
+.chart-title {
+  text-align: center;
+  margin: 0 0 8px 0; /* jarak kecil ke chart */
+  line-height: 1.2;
+  font-weight: 600;  
+}
+
+.wrapper_pie {
+    max-width: 50%;
+    margin: 0 auto; /* center chart */
+}
+
+.wrapper_doughnut {
+    max-width: 40%;
+    margin: 0 auto; /* center chart */
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+  margin-top: 24px;
+}
+
+/* Card untuk setiap chart */
+.chart-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px 20px 20px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+  border: 1px solid rgb(231, 230, 230);
+}
+
+/* Chart besar (full row) */
+.chart-card.full-width {
+  grid-column: span 2;
+}
+
+/* Kontrol tinggi canvas */
+.chart-card canvas {
+  width: 100% !important;
+  height: 400px !important;
+}
+
+/* Responsive (Tablet & Mobile) */
+@media (max-width: 900px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .chart-card.full-width {
+    grid-column: span 1;
+  }
+
+  .chart-card canvas {
+    height: 260px !important;
+  }
+}
+
+
+
+/* ===============================
+   RESPONSIVE BREAKPOINTS
+   =============================== */
+
+
+/* Tablet (≤ 992px) → 2 cards per row */
+@media (max-width: 992px) {
+  .info-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile (≤ 576px) → 1 card per row */
+@media (max-width: 576px) {
+  .info-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .info-card {
+    text-align: center;
+  }
+
+  .info-value {
+    font-size: 2rem;
+  }
+}

@@ -15,8 +15,8 @@
 
             <div class="navbar-right">
                 <ul>
-                    <li><a href="<?= BASE_URL . '#tentang_kami' ?>">Tentang Kami</a></li>
-                    <li><a href="<?= BASE_URL . '#faq' ?>">FAQ</a></li>
+                    <li><a href="<?= BASE_URL . '/index' ?>">Tentang Kami</a></li>
+                    <li><a href="<?= BASE_URL . '/public' ?>">Publik</a></li>
                     
                     <?php if(!isset($_SESSION["logged_in"])): ?>
                         <li><a href="#daftar">Daftar</a></li>

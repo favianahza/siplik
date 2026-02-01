@@ -428,6 +428,196 @@ function getTotalLaporanDitolak()
     return checkResource($result);
 }
 
+function lastEightWeek() 
+{
+    $query = "WITH RECURSIVE weeks AS (
+                SELECT 
+                    CURDATE() AS tanggal
+                UNION ALL
+                SELECT tanggal - INTERVAL 7 DAY
+                FROM weeks
+                WHERE tanggal > CURDATE() - INTERVAL 7 WEEK
+            )
+            SELECT 
+                CONCAT(
+                    'Minggu ke-',
+                    WEEK(tanggal, 3)
+                    - WEEK(DATE_SUB(tanggal, INTERVAL DAY(tanggal)-1 DAY), 3) + 1,
+                    ' ',
+                    CASE MONTH(tanggal)
+                        WHEN 1 THEN 'Januari'
+                        WHEN 2 THEN 'Februari'
+                        WHEN 3 THEN 'Maret'
+                        WHEN 4 THEN 'April'
+                        WHEN 5 THEN 'Mei'
+                        WHEN 6 THEN 'Juni'
+                        WHEN 7 THEN 'Juli'
+                        WHEN 8 THEN 'Agustus'
+                        WHEN 9 THEN 'September'
+                        WHEN 10 THEN 'Oktober'
+                        WHEN 11 THEN 'November'
+                        WHEN 12 THEN 'Desember'
+                    END
+                ) AS label_minggu,
+                COALESCE(COUNT(p.id), 0) AS total_laporan
+            FROM weeks w
+            LEFT JOIN pengaduan p
+            ON YEAR(p.created_at) = YEAR(w.tanggal)
+            AND WEEK(p.created_at, 3) = WEEK(w.tanggal, 3)
+            GROUP BY label_minggu, w.tanggal
+            ORDER BY w.tanggal ASC;
+    ";
+
+    $result = Database::fetchAll($query);
+    return checkResource($result);
+}
+
+function lastEightWeekComplete() 
+{
+    $query = "WITH RECURSIVE weeks AS (
+                    SELECT CURDATE() AS tanggal
+                    UNION ALL
+                    SELECT tanggal - INTERVAL 7 DAY
+                    FROM weeks
+                    WHERE tanggal > CURDATE() - INTERVAL 7 WEEK
+                )
+                SELECT
+                    CONCAT(
+                        'Minggu ke-',
+                        WEEK(w.tanggal, 3)
+                        - WEEK(DATE_SUB(w.tanggal, INTERVAL DAY(w.tanggal)-1 DAY), 3) + 1,
+                        ' ',
+                        CASE MONTH(w.tanggal)
+                            WHEN 1 THEN 'Januari'
+                            WHEN 2 THEN 'Februari'
+                            WHEN 3 THEN 'Maret'
+                            WHEN 4 THEN 'April'
+                            WHEN 5 THEN 'Mei'
+                            WHEN 6 THEN 'Juni'
+                            WHEN 7 THEN 'Juli'
+                            WHEN 8 THEN 'Agustus'
+                            WHEN 9 THEN 'September'
+                            WHEN 10 THEN 'Oktober'
+                            WHEN 11 THEN 'November'
+                            WHEN 12 THEN 'Desember'
+                        END
+                    ) AS label_minggu,
+                    COALESCE(COUNT(p.id), 0) AS total_laporan
+                FROM weeks w
+                LEFT JOIN pengaduan p
+                ON YEAR(p.created_at) = YEAR(w.tanggal)
+                AND WEEK(p.created_at, 3) = WEEK(w.tanggal, 3)
+                AND p.status = 'selesai'
+                GROUP BY w.tanggal, label_minggu
+                ORDER BY w.tanggal ASC;
+    ";
+
+    $result = Database::fetchAll($query);
+    return checkResource($result);
+}
+
+function lastSixMonth() 
+{
+    $query = "WITH RECURSIVE months AS (
+                SELECT DATE_FORMAT(CURDATE(), '%Y-%m-01') AS bulan
+                UNION ALL
+                SELECT bulan - INTERVAL 1 MONTH
+                FROM months
+                WHERE bulan > DATE_FORMAT(CURDATE(), '%Y-%m-01') - INTERVAL 5 MONTH
+            )
+            SELECT
+                CONCAT(
+                    CASE MONTH(m.bulan)
+                        WHEN 1 THEN 'Januari'
+                        WHEN 2 THEN 'Februari'
+                        WHEN 3 THEN 'Maret'
+                        WHEN 4 THEN 'April'
+                        WHEN 5 THEN 'Mei'
+                        WHEN 6 THEN 'Juni'
+                        WHEN 7 THEN 'Juli'
+                        WHEN 8 THEN 'Agustus'
+                        WHEN 9 THEN 'September'
+                        WHEN 10 THEN 'Oktober'
+                        WHEN 11 THEN 'November'
+                        WHEN 12 THEN 'Desember'
+                    END,
+                    ' ',
+                    YEAR(m.bulan)
+                ) AS label_bulan,
+                COALESCE(COUNT(p.id), 0) AS total_laporan
+            FROM months m
+            LEFT JOIN pengaduan p
+            ON DATE_FORMAT(p.created_at, '%Y-%m') = DATE_FORMAT(m.bulan, '%Y-%m')
+            GROUP BY m.bulan
+            ORDER BY m.bulan ASC;";
+
+    $result = Database::fetchAll($query);
+    return checkResource($result);
+}
+
+function lastSixMonthComplete() 
+{
+    $query = "WITH RECURSIVE months AS (
+                SELECT DATE_FORMAT(CURDATE(), '%Y-%m-01') AS bulan
+                UNION ALL
+                SELECT bulan - INTERVAL 1 MONTH
+                FROM months
+                WHERE bulan > DATE_FORMAT(CURDATE(), '%Y-%m-01') - INTERVAL 5 MONTH
+            )
+            SELECT
+                CONCAT(
+                    CASE MONTH(m.bulan)
+                        WHEN 1 THEN 'Januari'
+                        WHEN 2 THEN 'Februari'
+                        WHEN 3 THEN 'Maret'
+                        WHEN 4 THEN 'April'
+                        WHEN 5 THEN 'Mei'
+                        WHEN 6 THEN 'Juni'
+                        WHEN 7 THEN 'Juli'
+                        WHEN 8 THEN 'Agustus'
+                        WHEN 9 THEN 'September'
+                        WHEN 10 THEN 'Oktober'
+                        WHEN 11 THEN 'November'
+                        WHEN 12 THEN 'Desember'
+                    END,
+                    ' ',
+                    YEAR(m.bulan)
+                ) AS label_bulan,
+                COALESCE(COUNT(p.id), 0) AS total_laporan
+            FROM months m
+            LEFT JOIN pengaduan p
+            ON DATE_FORMAT(p.created_at, '%Y-%m') = DATE_FORMAT(m.bulan, '%Y-%m')
+            AND p.status = 'selesai'
+            GROUP BY m.bulan
+            ORDER BY m.bulan ASC;
+            ";
+
+    $result = Database::fetchAll($query);
+    return checkResource($result);
+}
+
+function byType() 
+{
+    $query = "SELECT 
+                k.nama AS tipe_laporan,
+                COUNT(p.id) AS total_laporan
+            FROM pengaduan p
+            JOIN ref_kategori k ON p.kategori_id = k.id
+            WHERE k.nama IN (
+                'Pencemaran Air',
+                'Pencemaran Tanah / Limbah B3',
+                'Pencemaran Udara',
+                'Penghijauan & Ruang Terbuka Hijau (RTH)',
+                'Persampahan & Kebersihan Kota',
+                'Perusakan Lingkungan / Alih Fungsi Lahan'
+            )
+            GROUP BY k.nama
+            ORDER BY total_laporan DESC;
+    ";
+
+    $result = Database::fetchAll($query);
+    return checkResource($result);
+}
 
 if ($method === 'GET' && ctype_digit($resource) && (strlen($resource) < 10) ) {
     // api/pengaduan/<ID>
@@ -494,6 +684,36 @@ if ($method === 'GET' && ctype_digit($resource) && (strlen($resource) < 10) ) {
 } else if ($method === 'GET' && $resource == "selesai-bulan-ini") { 
     // api/pengaduan/selesai-bulan-ini
     $data = getTotalLaporanSelesaiBulanIni();
+    echo $data ? json_encode($data)
+               : (http_response_code(404) && json_encode(['error' => 'Data not found']));
+
+} else if ($method === 'GET' && $resource == "last-eight-week") { 
+    // api/pengaduan/last-eight-week
+    $data = lastEightWeek();
+    echo $data ? json_encode($data)
+               : (http_response_code(404) && json_encode(['error' => 'Data not found']));
+
+} else if ($method === 'GET' && $resource == "last-eight-week-complete") { 
+    // api/pengaduan/last-eight-week-complete
+    $data = lastEightWeekComplete();
+    echo $data ? json_encode($data)
+               : (http_response_code(404) && json_encode(['error' => 'Data not found']));
+
+} else if ($method === 'GET' && $resource == "last-six-month") { 
+    // api/pengaduan/last-six-month
+    $data = lastSixMonth();
+    echo $data ? json_encode($data)
+               : (http_response_code(404) && json_encode(['error' => 'Data not found']));
+
+} else if ($method === 'GET' && $resource == "last-six-month-complete") { 
+    // api/pengaduan/last-six-month-complete
+    $data = lastSixMonthComplete();
+    echo $data ? json_encode($data)
+               : (http_response_code(404) && json_encode(['error' => 'Data not found']));
+
+} else if ($method === 'GET' && $resource == "type") { 
+    // api/pengaduan/type
+    $data = byType();
     echo $data ? json_encode($data)
                : (http_response_code(404) && json_encode(['error' => 'Data not found']));
 

@@ -1,6 +1,7 @@
 <?php 
 require_once __DIR__ . "/../config/init.php";
 require_once __DIR__ . "/../config/database.php";
+secureSessionStart();
 $kecamatan = Database::fetchAll("SELECT * from ref_kecamatan")
 ?>
 <!doctype html>
